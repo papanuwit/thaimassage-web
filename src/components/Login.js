@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -10,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-   const login =  async (e)=> {
+  const login = async (e) => {
     e.preventDefault();
     const body = {
       email: email,
@@ -28,24 +28,24 @@ const Login = () => {
         let role = res?.data[0]?.role;
         localStorage.setItem("role", res?.data[0]?.role);
         localStorage.setItem("auth", "loginged");
-        localStorage.setItem("profile","http://localhost:3050/"+res?.data[0]?.profile)
+        localStorage.setItem("profile", "http://localhost:3050/" + res?.data[0]?.profile)
 
         Swal.fire("Login!", "เข้าสู่ระบบสำเร็จ", "success");
 
-        if(role==="user"){
-              navigate("/");
+        if (role === "user") {
+          navigate("/");
         }
-        if(role === "admin"){
+        if (role === "admin") {
 
-  navigate("/admin");
+          navigate("/admin");
         }
 
-      
+
       }
     });
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <>
@@ -87,14 +87,15 @@ const Login = () => {
                     </Col>
                   </Row>
                 </Form.Group>
-             
+
                 <Button variant="primary w-100" type="submit" className="mt-4">
                   เข้าสู่ระบบ
                 </Button>
                 <br></br>
                 <a href="/register" className="mt-4">
                   {" "}
-                หากยังไมีมีบัญชี  ลงทะเบียน{" "}
+                  <br></br>
+                  หากยังไม่มีบัญชี  คลิกลงทะเบียน{" "}
                 </a>
               </Card.Body>
             </Form>
