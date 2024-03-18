@@ -22,6 +22,7 @@ const Login = () => {
         console.log(res.data);
         setIsLogin("loginged")
         localStorage.setItem("age", res?.data[0]?.age);
+        localStorage.setItem("gender", res?.data[0]?.gender);
         localStorage.setItem("firstname", res?.data[0]?.firstname);
         localStorage.setItem("lastname", res?.data[0]?.lastname);
         localStorage.setItem("customerId", res?.data[0]?.customerId);

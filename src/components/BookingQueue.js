@@ -8,7 +8,7 @@ function BookingQueue() {
   const location = useLocation();
   const propsData = location.state;
 
-  const {endTime, massagequeueId, startTime } = propsData;
+  const { endTime, massagequeueId, startTime } = propsData;
 
   const navigate = useNavigate();
   const [massageType, setMassageType] = useState("");
@@ -21,14 +21,50 @@ function BookingQueue() {
   const lastname = localStorage.getItem("lastname");
   const customerId = localStorage.getItem("customerId");
   const [promotion, setPromotion] = useState([]);
+  const [massageTypeRec, setMassageTypeRec] = useState([]);
   const [detail, setDetail] = useState("");
+
+
+  //users 
+  const [users, setUsers] = useState([]);
 
   const getPromotion = async () => {
     await axios.get(`http://localhost:3050/promotion`).then((res) => {
-      console.log(res);
       setPromotion(res.data);
     });
   };
+
+  const getRecommendation = async () => {
+
+    let age = localStorage.getItem("age");
+    let gender = localStorage.getItem("gender");
+    await axios.get(`http://localhost:3050/recomandtaion/${age}/${gender}`).then((res) => {
+
+      setUsers(res.data);
+    });
+
+
+  };
+
+
+  const getMassageTypeRec = () => {
+    users?.map(item => {
+      axios.get(`http://localhost:3050/messageRecomandtaion/${item.customerId}`).then((res) => {
+        let data = res.data;
+        if (massageTypeRec.length === 0) {
+          if (data.length >= 2) {
+            setMassageTypeRec(data)
+          }
+
+        }
+
+      });
+    })
+
+
+  };
+
+
 
   function saveBooking() {
     const body = {
@@ -55,11 +91,16 @@ function BookingQueue() {
   };
 
   useEffect(() => {
+    getRecommendation();
     getPromotion();
     console.log(propsData);
   }, []);
-  console.log(total)
-  useEffect(() => {}, [promotion]);
+
+  useEffect(() => { }, [promotion]);
+  useEffect(() => {
+    console.log(users);
+    getMassageTypeRec();
+  }, [users]);
 
   return (
     <>
@@ -101,8 +142,17 @@ function BookingQueue() {
                           <Form.Select
                             onChange={(e) => setMassageType(e.target.value)}
                           >
-                            <option value="นวดออยล์">นวดออยล์</option>
-                            <option value="นวดอโรม่า">นวดอโรม่า</option>
+                            {
+                              massageTypeRec?.map(item => {
+
+                                return (<>
+
+                                  <option value="นวดออยล์">{item?.massagetype}</option>
+                                </>)
+                              })
+                            }
+
+
                           </Form.Select>
                         </Col>
                       </Row>
@@ -156,7 +206,7 @@ function BookingQueue() {
                     {promotion?.map((pro) => {
                       return (
                         <>
-                          <Card  style={{backgroundColor:'#2964B9',color:'#fff'}}  className="mb-4" onClick={() => getDetail(pro)}>
+                          <Card style={{ backgroundColor: '#2964B9', color: '#fff' }} className="mb-4" onClick={() => getDetail(pro)}>
                             <Card.Body>
                               <h5> {pro.title}</h5>
                               <h5 >
@@ -168,7 +218,7 @@ function BookingQueue() {
                       );
                     })}
                   </Col>
-                 
+
                   <Col sm={6}>
                     <h5>รายละเอียด</h5>
                     <Card >
