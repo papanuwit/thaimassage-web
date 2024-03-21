@@ -60,7 +60,7 @@ const MessageForm = (props) => {
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group>
+          <Form.Group clas>
             <Form.Label>ชื่อ</Form.Label>
             <Form.Control
               type="text"
@@ -95,7 +95,7 @@ const MessageForm = (props) => {
           </Form.Group>
         </Col>
       </Row>
-      <Button onClick={() => uploadProfile()}> บันทึกข้อมูล</Button>
+      <Button className="w-100 mt-3" onClick={() => uploadProfile()}> บันทึกข้อมูล</Button>
     </Form>
   );
 };

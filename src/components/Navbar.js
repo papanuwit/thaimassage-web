@@ -31,11 +31,11 @@ function NavbarMenu() {
         sticky="top"
           collapseOnSelect
           expand="lg"
-          style={{ backgroundColor: "#A96D6D" }}
+          style={{ backgroundColor: "#2E8B57" }}
         >
           <Container>
             <Navbar.Brand style={{ color: "#fff" }}>
-              Thai Massage ระบบจัดการร้านนวดแผนไทย
+              Thai Massage 
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">

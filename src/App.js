@@ -8,7 +8,7 @@ function App() {
     <Container fluid>
       <div className="App">
         <Context>
-          <NavbarMenu />
+          <NavbarMenu  style={{margin:0}}/>
         </Context>
       </div>
     </Container>

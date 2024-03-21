@@ -28,14 +28,7 @@ const SideBar = (props) => {
           <span>ข้อมูลโปรโมชัน</span>
         </a>
        
-        <a className="list-group-item list-group-item-action my-2" onClick={()=>onSelectMenu("สรุปยอดขาย")}>
-          <i className="speedometer2"></i>
-          <span>สรุปยอดขาย</span>
-        </a>
-        <a className="list-group-item list-group-item-action my-2" onClick={()=>onSelectMenu("ระบบ AI แนะนำการนวด")}>
-          <i className="speedometer2"></i>
-          <span> ระบบ AI แนะนำการนวด </span>
-        </a>
+      
       </div>
     </div>
   );

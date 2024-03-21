@@ -11,9 +11,9 @@ function MassageQueue() {
   const [data, setData] = useState([]);
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const [statusQueue, setStatusQueue] = useState([]);
-  
+
   let auth = localStorage.getItem("auth")
-  console.log('in queue',auth)
+  console.log('in queue', auth)
   function getStatusQueue() {
     axios.get(`http://localhost:3050/statusqueues`).then((res) => {
       setStatusQueue(res.data);
@@ -35,7 +35,10 @@ function MassageQueue() {
   }
 
   function BookingQueue(time) {
-    navigate("/booking-queue", { state: time });
+    if (time.status === 'ว่าง') {
+      navigate("/booking-queue", { state: time });
+    }
+
   }
 
   useEffect(() => {
@@ -44,7 +47,7 @@ function MassageQueue() {
     getStatusQueue();
   }, []);
 
-  useEffect(() => {}, [statusQueue]);
+  useEffect(() => { }, [statusQueue]);
 
   return (
     <>
@@ -80,15 +83,15 @@ function MassageQueue() {
                 <thead>
                   <tr>
                     <th>หมอนวด</th>
-                    <th>09:00-12:00</th>
-                    <th>12:00-13:00</th>
-                    <th>14:00-15:00</th>
-                    <th>15:00-16:00</th>
+                    <th>ช่วงเวลา 08:00-16:00</th>
+                    <th>ช่วงเวลา 2</th>
+                    <th>ช่วงเวลา 3</th>
+                    <th>ช่วงเวลา 4</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {  data && data.length > 0 &&  data.map((item) => {
-                    let Times = filterStatus(item.massagequeueId);
+                  {data && data.length > 0 && data.map((item) => {
+                    let Times = filterStatus(item.masseuseId);
                     return (
                       <>
                         <tr>
@@ -98,7 +101,7 @@ function MassageQueue() {
                                 alt="profile"
                                 style={{ width: "120px" }}
                                 className="mt-2"
-                                src={item.profile}
+                                src={"http://localhost:3050/" + item.profile}
                               />
                               <p className="mt-2"> ชื่อ-นามสกุล  {item.firstname}</p>
                             </div>
@@ -111,8 +114,8 @@ function MassageQueue() {
                                   <Button
                                     onClick={() => BookingQueue(time)}
                                     className="btn-queue"
-                                    variant="success"
-                                  >
+                                    variant={time.status === "ว่าง" ? "success" : "danger"}
+                                  > <p>  {time.startTime} - {time.endTime}</p>
                                     {time.status}
                                   </Button>{" "}
                                 </td>

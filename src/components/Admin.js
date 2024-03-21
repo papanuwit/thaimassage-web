@@ -40,6 +40,13 @@ function Admin() {
         }
       });
     }
+     else if (val === "ข้อมูลโปรโมชัน") {
+      await axios.get("http://localhost:3050/promotion").then((res) => {
+        if (res.status === 200) {
+          setData(res.data);
+        }
+      });
+    }
   };
 
   const onSelectForm = (formname) => {
@@ -118,14 +125,25 @@ function Admin() {
                 <TableData
                   data={data}
                   columns={[
-                    "queuebookingId",
-                    "customerId",
-                    "massagetype",
-                    "startTime",
-                    "endTime",
-                    "dateBooking",
-                    "total",
-                    "payment",
+                    {key:"queuebookingId",title:"รหัสการจองคิวนวด"},
+                    {key:"customerId",title:"รหัสลูกค้า"},
+                    {key:"massagetype",title:"ประเภทการนวด"},
+                    {key:"startTime",title:"เวลาเริ่ม"},
+                    {key:"endTime",title:"เวลาสิ้นสุด"},
+                    {key:"dateBooking",title:"วันที่จอง"},
+                    {key:"total",title:"จำนวนเงิน"},
+                    {key:"payment",title:"สถานะการชำระเงิน"},
+                  ]}
+                />
+              )}
+              {menu === "ข้อมูลโปรโมชัน" && (
+                <TableData
+                  data={data}
+                  columns={[
+                    {key:"promotionId",title:"รหัสโปรโมชัน"},
+                    {key:"title",title:"ชื่อโปรโมชัน"},
+                    {key:"discount",title:"ส่วนลด"},
+                    {key:"detail",title:"รายละเอียด"},              
                   ]}
                 />
               )}

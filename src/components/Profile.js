@@ -33,8 +33,8 @@ function Profile() {
         <Col>
           <Card>
             <Card.Body>
-              <img src="profile.png" style={{ width: "80px" }} />
-              <h5> นาย ภานุวิชญ์ ปัสสาโท อายุ 22ปี</h5>
+              <img src={localStorage.getItem("profile")} style={{ width: "80px" }} />
+              <h5> {localStorage.getItem('firstname')+localStorage.getItem('lastname')}</h5>
               <h5> email : panuwit123@gmail.com</h5>
               <h5> หมายเลขโทรศัพท์ 0987485857</h5>
             </Card.Body>

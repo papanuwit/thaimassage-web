@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect } from "react";
 import { Table, Image } from "react-bootstrap";
 
@@ -29,7 +30,18 @@ const TableData = (props) => {
                           />
                         </td>
                       );
-                    } else {
+                    }
+                    if (key.key === "date") {
+                      return (
+                        <td>
+                          
+                           <p> { moment(item[key.key]).format('YYYY-MM-DD')} </p>
+                         
+                        
+                        </td>
+                      );
+                    }
+                    else {
                       return <td>{item[key.key]}</td>;
                     }
                   })}
