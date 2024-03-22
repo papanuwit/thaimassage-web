@@ -14,7 +14,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [file, setFile] = useState("");
   const [img, setImg] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("ชาย");
 
   let profile = "";
   const handelUpload = (e) => {
@@ -129,17 +129,19 @@ function Register() {
                         />
                       </Form.Group>
                     </Col>
-                    
+
                     <Col>
                       <Form.Group>
                         <Form.Label style={{ float: 'left' }}>เพศ</Form.Label>
-                        <Form.Control
-                          type="number"
-                          value={age}
-                          onChange={(e) => setAge(e.target.value)}
-                          placeholder="อายุ"
-                          required
-                        />
+                        <Form.Select
+                          onChange={(e) => setGender(e.target.value)}
+                          aria-label="Default select example">
+
+
+                          <option value="male">male</option>
+                          <option value="female">female</option>
+
+                        </Form.Select>
                       </Form.Group>
                     </Col>
                   </Row>

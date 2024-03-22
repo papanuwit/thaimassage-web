@@ -38,9 +38,13 @@ function BookingQueue() {
 
     let age = localStorage.getItem("age");
     let gender = localStorage.getItem("gender");
+    
     await axios.get(`http://localhost:3050/recomandtaion/${age}/${gender}`).then((res) => {
 
-      setUsers(res.data);
+     let newSUer =    res?.data.filter(obj=> obj.customerId!==customerId)
+     
+     setUsers(newSUer);
+
     });
 
 
@@ -49,19 +53,20 @@ function BookingQueue() {
 
   const getMassageTypeRec = () => {
     users?.map(item => {
+
       axios.get(`http://localhost:3050/messageRecomandtaion/${item.customerId}`).then((res) => {
         let data = res.data;
+        console.log(data.length)
         if (massageTypeRec.length === 0) {
-          if (data.length >= 2) {
+          if (data.length > 1) {
             setMassageTypeRec(data)
           }
 
         }
 
       });
+
     })
-
-
   };
 
 
@@ -78,7 +83,11 @@ function BookingQueue() {
 
     axios.post(`http://localhost:3050/queuebooking`, body).then((res) => {
       if (res.status === 200) {
+
+
+        axios.put(`http://localhost:3050/statusqueue/${propsData.statusqueueId}`, { status: "ไม่ว่าง" })
         Swal.fire("Good job!", "บันทึกการจองคิวสำเร็จ", "success");
+
       }
       navigate("/profile");
     });
@@ -96,7 +105,7 @@ function BookingQueue() {
     console.log(propsData);
   }, []);
 
-  useEffect(() => { }, [promotion]);
+
   useEffect(() => {
     console.log(users);
     getMassageTypeRec();
@@ -177,6 +186,7 @@ function BookingQueue() {
                       </Row>
                     </Form.Group>
                   </Col>
+                  
                 </Row>
 
                 <Card className="mt-4 p-2">

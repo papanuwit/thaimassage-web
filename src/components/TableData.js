@@ -1,9 +1,9 @@
 import moment from "moment";
 import React, { useEffect } from "react";
-import { Table, Image } from "react-bootstrap";
+import { Table, Image, Button } from "react-bootstrap";
 
 const TableData = (props) => {
-  const { data, columns } = props;
+  const { data, columns,menu,onClickRowUpdate } = props;
   useEffect(() => {}, [data]);
   return (
     <>
@@ -36,6 +36,17 @@ const TableData = (props) => {
                         <td>
                           
                            <p> { moment(item[key.key]).format('YYYY-MM-DD')} </p>
+                         
+                        
+                        </td>
+                      );
+                    }
+                    if (key.key === "action") {
+                      return (
+                        <td>
+                          
+                          <Button variant="warning" onClick={()=>onClickRowUpdate(item,menu)}> แก้ไข </ Button> { ' '}
+                          <Button variant="danger"> ลบ </ Button>
                          
                         
                         </td>

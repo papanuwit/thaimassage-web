@@ -1,14 +1,16 @@
-import React, { useState} from "react";
+import React, { useState,useEffect} from "react";
 import { Row, Col, Form, Image, Button } from "react-bootstrap";
 import axios from "axios";
-const MessageForm = (props) => {
-  
+const MessageFormUpdate = (props) => { 
+  const {handleClose,onSelectMenu,dataUpdate} = props;
+ 
   const [fileSelect, setFileSelect] = useState(null);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [age, setAge] = useState("");
-  const {handleClose,onSelectMenu} = props;
+  const [firstname, setFirstname] = useState(dataUpdate.firstname);
+  const [lastname, setLastname] = useState(dataUpdate.lastname);
+  const [age, setAge] = useState(dataUpdate.age);
+ 
 
+  console.log('informup',dataUpdate)
   let path = "";
   const uploadProfile = async () => {
 
@@ -34,19 +36,21 @@ const MessageForm = (props) => {
         profile: path,
       };
 
-      await axios.post(`http://localhost:3050/masseuse`, body).then((res) => {
+      await axios.put(`http://localhost:3050/masseuse/${dataUpdate.masseuseId}`, body).then((res) => {
         if (res.status === 200) {
-          alert("เพิ่มข้อมูลหมอนวดสำเร็จ");
+          alert("แก้ไขมูลหมอนวดสำเร็จ");
          
         }
       });
     }
-
-  await onSelectMenu("ข้อมูลหมอนวด")
+    
+   onSelectMenu("ข้อมูลหมอนวด")
   await handleClose();
     
   };
+useEffect(()=>{
 
+},[dataUpdate])
   return (
     <Form>
       <Row>
@@ -64,11 +68,12 @@ const MessageForm = (props) => {
         </Col>
         <Col>
           <Form.Group clas>
-            <Form.Label>ชื่อ</Form.Label>
+            <Form.Label>ชื่อ {dataUpdate.firstname}</Form.Label>
             <Form.Control
               type="text"
               onChange={(e) => setFirstname(e.target.value)}
               value={firstname}
+             
               placeholder="ชื่อ"
             />
           </Form.Group>
@@ -98,9 +103,9 @@ const MessageForm = (props) => {
           </Form.Group>
         </Col>
       </Row>
-      <Button className="w-100 mt-3" onClick={() => uploadProfile()}> บันทึกข้อมูล</Button>
+      <Button className="w-100 mt-3" onClick={() => uploadProfile()}> แก้ไขข้อมูล</Button>
     </Form>
   );
 };
 
-export default MessageForm;
+export default MessageFormUpdate;
